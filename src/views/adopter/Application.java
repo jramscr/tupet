@@ -1,7 +1,6 @@
 package views.adopter;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +22,7 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class Application extends JFrame {
 
-	private JPanel contentPane;
+	private final JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -44,27 +43,11 @@ public class Application extends JFrame {
 	private JTextField textField_17;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Application frame = new Application();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
 	public Application() {
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -96,7 +79,7 @@ public class Application extends JFrame {
 		scrollPane.setBounds(6, 35, 192, 369);
 		panel_3.add(scrollPane);
 		
-		JList<?> list = new JList<Object>();
+		JList<?> list = new JList<>();
 		scrollPane.setViewportView(list);
 		
 		JLabel lblFotomascota = new JLabel("Fotos / Datos de la Mascota");

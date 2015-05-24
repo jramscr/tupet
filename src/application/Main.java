@@ -10,10 +10,10 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    Login frame = new Login();
+                    Signin frame = new Signin();
                     frame.setVisible(true);
+                    frame.setLocationRelativeTo(null);
                 } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         });

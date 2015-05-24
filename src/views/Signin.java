@@ -1,5 +1,6 @@
 package views;
 
+import application.Login;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,9 +19,9 @@ import views.admin.*;
 import views.adopter.*;
 
 @SuppressWarnings("serial")
-public class Login extends JFrame {
+public class Signin extends JFrame {
 
-	private JPanel contentPane;
+	private final JPanel contentPane;
 	private JTextField inputEmail;
 	private JTextField inputPassword;
 	private final JButton buttonEnter = new JButton("Ingresar");
@@ -28,7 +29,7 @@ public class Login extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Login() {
+	public Signin() {
 		setTitle("Ingresar TUPET");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,6 +46,7 @@ public class Login extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         Signup register_user = new Signup();
                         register_user.setVisible(true);
+                        register_user.setLocationRelativeTo(null);
                     }
                 });
 		mnArchivo.add(mntmRegistrarUsuario);
@@ -63,7 +65,6 @@ public class Login extends JFrame {
 		
 		inputEmail = new JTextField();
 		inputEmail.setHorizontalAlignment(SwingConstants.CENTER);
-		inputEmail.setText("correo");
 		inputEmail.setToolTipText("correo");
 		inputEmail.setBounds(154, 75, 134, 28);
 		contentPane.add(inputEmail);
@@ -72,27 +73,29 @@ public class Login extends JFrame {
 		inputPassword = new JTextField();
 		inputPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		inputPassword.setToolTipText("contraseña");
-		inputPassword.setText("contraseña");
 		inputPassword.setColumns(10);
 		inputPassword.setBounds(154, 115, 134, 28);
 		contentPane.add(inputPassword);
 		buttonEnter.addActionListener(new ActionListener() {
 			@SuppressWarnings("unused")
 			public void actionPerformed(ActionEvent e) {
+                            String correo = inputEmail.getText();
+                            String password = inputPassword.getText();
+                            Login session = new Login();
                             //If user exists.
-				if(true){
-                                    //If user is and admin
-                                    if(false){
-                                        Configuration configuration = new Configuration();
-                                        configuration.setVisible(true);
-                                    //If user is not an admin
-                                    }else{
-                                        Application application = new Application();
-                                        application.setVisible(true);
-                                    }
-				}else{
-                                    JOptionPane.showMessageDialog(null, "No existe el Usuario");
-				}
+                            if(session.existsUser(correo, password)){
+                                //If user is and admin
+                                if(Integer.parseInt(Login.current_user_tipo) == 1){
+                                    Configuration configuration = new Configuration();
+                                    configuration.setVisible(true);
+                                //If user is not an admin
+                                }else{
+                                    Application application = new Application();
+                                    application.setVisible(true);
+                                }
+                            }else{
+                                JOptionPane.showMessageDialog(null, "No existe el Usuario");
+                            }
 			}
 		});
 		buttonEnter.setBounds(154, 151, 134, 29);
