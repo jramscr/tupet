@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package application;
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
@@ -11,7 +12,7 @@ import javax.swing.JOptionPane;
  *
  * @author Jesús
  */
-public class Login {
+public class User {
     public static int current_user_id;
     public static String current_user_email;
     public static String current_user_tipo;
@@ -39,6 +40,24 @@ public class Login {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocurrió un problema al ejecutar!");
+        }
+        return false;
+    }
+    
+    public boolean createUser(String tipo_usuario, String nombre, String apellido,
+            String email, String telefono, String direccion, String fotografia, String contrasennia){
+        DBConnection baseDatos = new DBConnection();
+
+        try {
+            boolean call = baseDatos.execute_procedure("{ call tupet.registrarUsuario("+tipo_usuario+","+nombre+","+apellido+","+email+","+telefono+","+direccion+","+fotografia+","+contrasennia+"); }");
+            
+            if (call == true){
+                JOptionPane.showMessageDialog(null, "Se creo el usuario correctamente!!");
+            }else{
+                JOptionPane.showMessageDialog(null, "No se pudo crear el usuario!!!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un problema!!");
         }
         return false;
     }

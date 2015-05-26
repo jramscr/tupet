@@ -1,6 +1,6 @@
 package views;
 
-import application.Login;
+import application.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -81,11 +81,11 @@ public class Signin extends JFrame {
 			public void actionPerformed(ActionEvent e) {
                             String correo = inputEmail.getText();
                             String password = inputPassword.getText();
-                            Login session = new Login();
+                            User session = new User();
                             //If user exists.
                             if(session.existsUser(correo, password)){
                                 //If user is and admin
-                                if(Integer.parseInt(Login.current_user_tipo) == 1){
+                                if(Integer.parseInt(User.current_user_tipo) == 1){
                                     Configuration configuration = new Configuration();
                                     configuration.setVisible(true);
                                 //If user is not an admin

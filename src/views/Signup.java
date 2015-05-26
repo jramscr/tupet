@@ -1,5 +1,6 @@
 package views;
 
+import application.User;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,6 +11,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -48,7 +51,13 @@ public class Signup extends JFrame {
 		mnArchivo.add(mntmIngresar);
 		
 		mntmSalir = new JMenuItem("Salir");
+                mntmSalir.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        dispose();
+                    }
+		});
 		mnArchivo.add(mntmSalir);
+                
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -100,5 +109,11 @@ public class Signup extends JFrame {
 		JButton btnRegistrarUsuario = new JButton("Registrar Usuario");
 		btnRegistrarUsuario.setBounds(306, 221, 138, 29);
 		contentPane.add(btnRegistrarUsuario);
+                btnRegistrarUsuario.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        User signup = new User();
+                        signup.createUser("2", "Jesus", "Ramos", "jramscr@gmail.com", "12345678", "500 mts al sur de la escuela de la soledad", "c://asfdsfds/asdasf", "password");
+                    }
+		});
 	}
 }
