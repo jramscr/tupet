@@ -43,32 +43,6 @@ public class DBConnection {
         } return this;
     }
     
-        public boolean execute_procedure(String sql_string_procedure){
-        try {
-            int return_value = 0;
-            Class.forName("oracle.jdbc.OracleDriver");
-            String database_url_listener = "jdbc:oracle:thin:@localhost:1521:oracle";
-            CallableStatement call = null;
-            connection = DriverManager.getConnection(database_url_listener, "tupet", "tupet");
-            
-            call = connection.prepareCall(sql_string_procedure);
-            call.setInt("RES", return_value);
-            ResultSet commit = call.executeQuery();
-            
-            if (commit != null) {
-                System.out.println("La conexion fue establecida exitosamente.");
-                return true;
-            } else {
-                System.out.println("Conexion fallida.");
-                return false;
-            }
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            
-        } return false;
-    }
-    
     public boolean create(String sql){
         try {
             Statement sql_sentence;

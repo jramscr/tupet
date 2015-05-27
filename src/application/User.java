@@ -5,6 +5,8 @@
  */
 package application;
 import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
@@ -16,6 +18,7 @@ public class User {
     public static int current_user_id;
     public static String current_user_email;
     public static String current_user_tipo;
+    private Connection connection;
     
     public boolean existsUser(String correo, String password){
         DBConnection baseDatos = new DBConnection().connect();
@@ -46,18 +49,41 @@ public class User {
     
     public boolean createUser(String tipo_usuario, String nombre, String apellido,
             String email, String telefono, String direccion, String fotografia, String contrasennia){
-        DBConnection baseDatos = new DBConnection();
-
+            CallableStatement call = null;
         try {
-            boolean call = baseDatos.execute_procedure("{ call tupet.registrarUsuario("+tipo_usuario+","+nombre+","+apellido+","+email+","+telefono+","+direccion+","+fotografia+","+contrasennia+"); }");
+            int index = 0;
+            Class.forName("oracle.jdbc.OracleDriver");
+            String database_url_listener = "jdbc:oracle:thin:@localhost:1521:oracle";
+            connection = DriverManager.getConnection(database_url_listener, "tupet", "tupet");
             
-            if (call == true){
-                JOptionPane.showMessageDialog(null, "Se creo el usuario correctamente!!");
+            call = connection.prepareCall(Constants.REGISTRAR_USUARIO);
+            //Cargar los parametros de entrada.
+            call.setString(++index, tipo_usuario);
+            call.setString(++index, nombre);
+            call.setString(++index, apellido);
+            call.setString(++index, email);
+            call.setString(++index, telefono);
+            call.setString(++index, direccion);
+            call.setString(++index, fotografia);
+            call.setString(++index, contrasennia);
+            // Registrar los parametros de salida.
+            call.registerOutParameter(++index, java.sql.Types.INTEGER);
+            //Ejecutamos el procedure.
+            call.execute();
+            
+            int resultado = call.getInt(9);
+            
+            if (resultado == 1){
+                return true;
             }else{
-                JOptionPane.showMessageDialog(null, "No se pudo crear el usuario!!!");
+                JOptionPane.showMessageDialog(null, "No se pudo registrar el usuario!");
             }
+            
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un problema!!");
+            e.printStackTrace();
+            
+        } finally {
+            SQLTools.close(null, call, connection);
         }
         return false;
     }

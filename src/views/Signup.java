@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public class Signup extends JFrame {
@@ -112,7 +113,10 @@ public class Signup extends JFrame {
                 btnRegistrarUsuario.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         User signup = new User();
-                        signup.createUser("2", "Jesus", "Ramos", "jramscr@gmail.com", "12345678", "500 mts al sur de la escuela de la soledad", "c://asfdsfds/asdasf", "password");
+                        boolean commit = signup.createUser("Adoptante", "Jesus", "Ramos", "jramscr@gmail.com", "12345678", "500 mts al sur de la escuela de la soledad", "c://asfdsfds/asdasf", "password");
+                        if (commit == true){
+                            JOptionPane.showMessageDialog(null, "Se creo el usuario de manera existosa!!");
+                        }
                     }
 		});
 	}
